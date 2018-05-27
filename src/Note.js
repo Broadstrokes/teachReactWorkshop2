@@ -19,7 +19,11 @@ class Note extends Component {
     }
 
     edit() { alert('editing note'); this.setState({editing: true}) }
-    remove() { alert('removing note') }
+    
+    remove(e) {
+        e.preventDefault;
+        this.props.onRemove(this.props.index)
+    }
     
     /*
         Define behavior in the event of onChange

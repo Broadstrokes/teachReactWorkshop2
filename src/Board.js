@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Note from './Note'
+import FaPlus from 'react-icons/lib/fa/plus'
 
 class Board extends Component {
     constructor(props) {
@@ -10,15 +11,14 @@ class Board extends Component {
                 each time a note is updated, we need to send
                 that child note's text its parent i.e. board.
              */
-            notes: [
-                {id:0, note: 'Call Jimmy'},
-                {id:1, note: 'Pickup laundry'},
-                {id:2, note: 'Watch tv'},
-            ]
+            notes: [],
+            lastId: 0
         }
         this.eachNote = this.eachNote.bind(this)
         this.update = this.update.bind(this)
         this.remove = this.remove.bind(this)
+        this.add = this.add.bind(this)
+        this.nextId = this.nextId.bind(this)
     }
 
     /*
@@ -43,9 +43,30 @@ class Board extends Component {
         }))
     }
 
+    add(text) {
+        this.setState(prevState => ({
+            // notes: prevState.notes.push({id:0, note:text}),
+            notes: [
+                ...prevState.notes,
+                {
+                    id: this.nextId(),
+                    note: text
+                }
+            ]
+        })
+    )}
+
+    nextId() {
+        this.uniqueId = this.uniqueId || 0;
+        return this.uniqueId++
+    }
+
     eachNote(note, i) {
         return (
-            <Note key={i} index={i} onChange={this.update} onRemove={this.remove}>
+            <Note key={i} index={i} 
+                onChange={this.update} 
+                onRemove={this.remove}
+                onAdd={this.add}>
                 {note.note}
             </Note>
         )
@@ -55,6 +76,10 @@ class Board extends Component {
         return (
             <div className='board'>
                 {this.state.notes.map(this.eachNote)}
+                { /* pass a string to each new note */ }
+                <button onClick={this.add.bind(null, 'New Note')} id='add'>
+                    <FaPlus />
+                </button>
             </div>
         )
     }

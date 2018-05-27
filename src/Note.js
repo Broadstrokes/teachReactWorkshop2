@@ -20,14 +20,28 @@ class Note extends Component {
 
     edit() { alert('editing note'); this.setState({editing: true}) }
     remove() { alert('removing note') }
-    save() { alert('saving note: ' + this._newText.value) }
+    
+    /*
+        Define behavior in the event of onChange
+        Set the state of the note back to editing false. 
+        This is how react applications work. We store state data 
+        in the parent component, we pass down state via props 
+        and then we pass up new information with events. 
+     */
+    save(e) {
+        e.preventDefault();
+        this.props.onChange(this._newText.value, this.props.index);
+        this.setState({
+            editing: false
+        })
+    }
 
     renderForm() {
         return (
             <div className='note'>
-                <form>
-                    <textarea ref={input => this._newText = input}/>
-                    <button onClick={this.save} id='save'><FaFloppyO /></button>
+                <form onSubmit={this.save}>
+                    <textarea ref={input => this._newText = input}>{this.props.children}</textarea>
+                    <button id='save'><FaFloppyO /></button>
                 </form>
             </div>
         )

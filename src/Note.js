@@ -18,10 +18,14 @@ class Note extends Component {
         this.renderNote = this.renderNote.bind(this)
     }
 
-    edit() { alert('editing note'); this.setState({editing: true}) }
+    edit() { 
+        this.setState({
+            editing: true
+        }) 
+    }
     
     remove(e) {
-        e.preventDefault;
+        e.preventDefault();
         this.props.onRemove(this.props.index)
     }
     

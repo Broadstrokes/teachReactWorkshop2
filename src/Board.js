@@ -11,8 +11,7 @@ class Board extends Component {
                 each time a note is updated, we need to send
                 that child note's text its parent i.e. board.
              */
-            notes: [],
-            lastId: 0
+            notes: []
         }
         this.eachNote = this.eachNote.bind(this)
         this.update = this.update.bind(this)

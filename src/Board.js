@@ -36,6 +36,16 @@ class Board extends Component {
     }
 
     /*
+        This will check to make sure something has changed before re-rendering component
+        If something has changed it will re-render, otherwise it won't
+     */
+    shouldComponentUpdate(nextProps, nextState) { 
+        return (
+            this.props.children !== nextProps.children || this.state !== nextState
+        )
+    }
+
+    /*
         This function will be passed down to each child 
         to update the parent's state
      */

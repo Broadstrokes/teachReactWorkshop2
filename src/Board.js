@@ -20,6 +20,21 @@ class Board extends Component {
         this.nextId = this.nextId.bind(this)
     }
 
+    componentWillMount() {
+        // make service call here to fetch some data
+        let self = this
+        let serviceUrl = `https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`
+        if(this.props.count) {
+            fetch(serviceUrl)
+                .then(response => response.json()) // convert to JSON
+                .then(
+                    json => json[0]
+                        .split('. ')
+                        .forEach(sentence => self.add('Buy/ '.concat(sentence.substring(0, 20))))
+                )
+        }
+    }
+
     /*
         This function will be passed down to each child 
         to update the parent's state
